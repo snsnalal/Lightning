@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     EditText textPhoneNo;
     EditText textSMS;
 
-    String mTvBluetoothStatus;
     byte[] mTvReceiveData;
     byte[] mTvSendData;
 
@@ -57,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
     final static int BT_CONNECTING_STATUS = 3;
     final static UUID BT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
+    public ConnectedBluetoothThread getThread() {
+        return mThreadConnectedBluetooth;
+    }
+
     @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        mTvBluetoothStatus = "";
         mTvReceiveData = new byte[5];
         mTvSendData = new byte[5];
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -102,15 +104,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void bluetoothOn() {
         if (mBluetoothAdapter == null) {
-            Log.d("Bluetooth", "블루투스를 지원하지 않는 기기입니다.");
             Toast.makeText(getApplicationContext(), "블루투스를 지원하지 않는 기기입니다.", Toast.LENGTH_LONG).show();
         } else {
             if (mBluetoothAdapter.isEnabled()) {
-                Log.d("Bluetooth", "블루투스가 이미 활성화 되어 있습니다.");
                 Toast.makeText(getApplicationContext(), "블루투스가 이미 활성화 되어 있습니다.", Toast.LENGTH_LONG).show();
-                mTvBluetoothStatus = "비활성화";
             } else {
-                Log.d("Bluetooth", "블루투스가 활성화 되어 있지 않습니다.");
                 Toast.makeText(getApplicationContext(), "블루투스가 활성화 되어 있지 않습니다.", Toast.LENGTH_LONG).show();
                 Intent intentBluetoothEnable = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(intentBluetoothEnable, BT_REQUEST_ENABLE);
@@ -142,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
     public void listPairedDevices() {
         if (mBluetoothAdapter.isEnabled()) {
             mPairedDevices = mBluetoothAdapter.getBondedDevices();
-
             if (mPairedDevices.size() > 0) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("장치 선택");
@@ -179,12 +176,15 @@ public class MainActivity extends AppCompatActivity {
             mThreadConnectedBluetooth = new ConnectedBluetoothThread(mBluetoothSocket);
             mThreadConnectedBluetooth.start();
             mBluetoothHandler.obtainMessage(BT_CONNECTING_STATUS, 1, -1).sendToTarget();
+
+            mTvSendData = new byte[]{(byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0x00, (byte) 0xFF};
+            mThreadConnectedBluetooth.write(mTvSendData);  // 전체 LED ON
         } catch (IOException e) {
             Toast.makeText(getApplicationContext(), "블루투스 연결 중 오류가 발생했습니다.", Toast.LENGTH_LONG).show();
         }
     }
 
-    private class ConnectedBluetoothThread extends Thread {
+    public class ConnectedBluetoothThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
