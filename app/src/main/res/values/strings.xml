@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">lighting</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting">설정</string>
+    <string name="add">추가</string>
+    <string name="add2">추가화면</string>
+    <string name="valuebar">valuebar</string>
+    <string name="saturation">saturation</string>
+    <string name="opacity">Opacity</string>
+    <string name="svbar">svbar</string>
+    <string name="phone">수신 전화번호</string>
+    <string name="mesage">메세지를 입력하세요.</string>
+    <string name="test">TextView</string>
+    <string name="add_button">Button</string>
+    <string name="connet">연결</string>
+    <string name="con">연결</string>
+    <string name="send">보내기</string>
+    <string name="no1">1번</string>
+    <string name="no2">2번</string>
+    <string name="no3">3번</string>
+    <string name="textview22">TextView</string>
+    <string name="dasdadasda">dasdadasda</string>
+    <string name="numtextview">TextView</string>
+</resources>

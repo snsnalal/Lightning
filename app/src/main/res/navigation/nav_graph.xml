@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/onoff">
+
+    <fragment
+        android:id="@+id/color_add"
+        android:name="com.example.lighting.fragment.Color_add"
+        android:label="추가"
+        tools:layout="@layout/fragment_color_add" >
+        <argument
+            android:name="Color"
+            app:argType="string" />
+        <argument
+            android:name="num"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/setting"
+        android:name="com.example.lighting.fragment.Setting"
+        android:label="세팅"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/ledmenu"
+        android:name="com.example.lighting.fragment.ledmenu"
+        android:label="ledmenu" >
+        <action
+            android:id="@+id/action_ledmenu_to_onoff"
+            app:destination="@id/onoff" />
+        <action
+            android:id="@+id/action_ledmenu_to_setting"
+            app:destination="@id/setting" />
+        <action
+            android:id="@+id/action_ledmenu_to_color_add"
+            app:destination="@id/color_add" />
+    </fragment>
+    <fragment
+        android:id="@+id/onoff"
+        android:name="com.example.lighting.fragment.onoff"
+        android:label="onoff" >
+        <action
+            android:id="@+id/action_onoff_to_ledmenu"
+            app:destination="@id/ledmenu" />
+    </fragment>
+</navigation>
