@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/onoff"
-        android:name="com.example.lighting.fragment.onoff"
+        android:name="com.example.lighting.fragment.ono"
         android:label="onoff" >
         <action
             android:id="@+id/action_onoff_to_ledmenu"

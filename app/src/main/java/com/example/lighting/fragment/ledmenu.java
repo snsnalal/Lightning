@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,14 +14,16 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.lighting.R;
 
 public class ledmenu extends Fragment {
-
+    Button btn;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        View v = inflater.inflate(R.layout.fragment_ledmenu, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ledmenu, container, false);
+
+        return v;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -95,7 +98,11 @@ public class ledmenu extends Fragment {
                         .navigate(R.id.action_ledmenu_to_onoff);
             }
         });
-        view.findViewById(R.id.btn_setting3).setOnClickListener(new View.OnClickListener() {
+        btn = view.findViewById(R.id.btn_setting);
+
+
+
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(view).navigate((R.id.action_ledmenu_to_setting));
