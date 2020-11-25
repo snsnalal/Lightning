@@ -28,9 +28,7 @@ public class Color_add extends Fragment {
     String color;
     TextView txt;
     TextView txt2;
-    TextView txt4;
     Button btn;
-    private BluetoothSPP bt;
     Button Con_btn;
     public Color_add() {
         // Required empty public constructor
@@ -51,7 +49,6 @@ public class Color_add extends Fragment {
         picker = (ColorPicker)v.findViewById(R.id.picker);
         txt = (TextView)v.findViewById(R.id.Color_text);
         txt2 = (TextView)v.findViewById(R.id.num_text);
-        txt4 = (TextView)v.findViewById(R.id.textView);
         TextView txt3 = (TextView)v.findViewById(R.id.textView4);
         btn = (Button)v.findViewById(R.id.button);
         SeekBar sb = (SeekBar)v.findViewById(R.id.seekBar);
@@ -63,19 +60,16 @@ public class Color_add extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 txt3.setText(Integer.toHexString(seekBar.getProgress()));
-                txt4.setText(Integer.toHexString(seekBar.getProgress()));
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 txt3.setText(Integer.toHexString(seekBar.getProgress()));
-                txt4.setText(Integer.toHexString(seekBar.getProgress()));
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 txt3.setText(Integer.toHexString(seekBar.getProgress()));
-                txt4.setText(Integer.toHexString(seekBar.getProgress()));
             }
         });
         btn.setOnClickListener(new View.OnClickListener() {

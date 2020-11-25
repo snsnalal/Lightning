@@ -13,9 +13,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.lighting.R;
 
+import app.akexorcist.bluetotohspp.library.BluetoothSPP;
+
 public class ono extends Fragment {
     Button btn_on;
     Button btn_off;
+    private BluetoothSPP bt;
 
     public byte[] sendByte = new byte[5];
     @Override
