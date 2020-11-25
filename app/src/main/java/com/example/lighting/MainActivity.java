@@ -1,4 +1,3 @@
-
 package com.example.lighting;
 
 import androidx.annotation.Nullable;
@@ -10,36 +9,20 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.SaturationBar;
-
-import org.w3c.dom.Text;
-
-import app.akexorcist.bluetotohspp.library.BluetoothSPP;
-import app.akexorcist.bluetotohspp.library.BluetoothState;
-import app.akexorcist.bluetotohspp.library.DeviceList;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     AppBarConfiguration appBarConfiguration;
-    ColorPicker picker;
-    SaturationBar saturationBar;
     EditText textPhoneNo;
     EditText textSMS;
-    private BluetoothSPP bt;
-
+    public static final int REQUEST_ENABLE_BT = 3;
 
     // final TextView text = (TextView)findViewById(R.id.textView);
     @Override
@@ -53,7 +36,29 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        Log.d("Bluetooth", "bluetoothAdapter = " + bluetoothAdapter);
+
+        if (!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        Log.d("Bluetooth", "bluetoothAdapter.isEnabled() = " + bluetoothAdapter.isEnabled());
+
+        Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+        if (pairedDevices.size() > 0) {
+            // There are paired devices. Get the name and address of each paired device.
+            for (BluetoothDevice device : pairedDevices) {
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress(); // MAC address
+                Log.d("Bluetooth", "deviceName = " + deviceName);
+                Log.d("Bluetooth", "deviceName = " + deviceHardwareAddress);
+            }
+        }
+        Log.d("Bluetooth", "pairedDevices.size() = " + pairedDevices.size());
     }
+
     @Override
 
     /*public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
 
-       // textView = (TextView)findViewById(R.id.textView);
+    // textView = (TextView)findViewById(R.id.textView);
         /*buttonSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
